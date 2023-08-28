@@ -1,0 +1,74 @@
+﻿@{
+    ViewData["Title"] = "Index";
+}
+@model List<GetDirectorVM>
+
+<div class="container-fluid">
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title">Yönetmen Listesi</h3>
+        </div>
+        <div class="card-body">
+            <table class="table table-bordered mt-3 p-2">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Yönetmen Adı</th>
+                        <th>Doğum Tarihi</th>
+                        <th>Eklenme Tarihi</th>
+                        <th>Güncellenme Tarihi</th>
+                        <th>Güncelle</th>
+                        <th>Sil</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var director in Model)
+                    {
+                        <tr>
+                            <td>@director.Id</td>
+                            <td>@director.FullName</td>
+                            <td>@director.BirthDate.ToShortDateString()</td>
+                            <td>@director.CreatedDate</td>
+                            @if (director.UpdatedDate is not null)
+                            {
+                                <td>@director.UpdatedDate</td>
+                            }
+                            else
+                            {
+                                <td> - </td>
+                            }
+                            <td>
+                                <a asp-area="Admin" asp-controller="Directors" asp-action="UpdateDirector" asp-route-id="@director.Id" class="btn btn-outline-primary">Güncelle</a>
+                            </td>
+                            <td>
+                                <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#exampleModal-@director.Id">
+                                    Sil
+                                </button>
+
+                                <div class="modal fade" id="exampleModal-@director.Id" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="exampleModalLabel">Silme Uyarısı</h5>
+                                            </div>
+                                            <div class="modal-body">
+                                                Silmek istediğinize emin misiniz?
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-outline-info" data-bs-dismiss="modal">İptal</button>
+                                                <a asp-area="Admin" asp-controller="Directors" asp-action="DeleteDirector" asp-route-id="@director.Id" class="btn btn-outline-danger">Sil</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+        <div class="card-footer">
+            <a class="btn btn-outline-info d-block" asp-area="Admin" asp-controller="Directors" asp-action="AddDirector">Yeni Yönetmen Ekle</a>
+        </div>
+    </div>
+</div>

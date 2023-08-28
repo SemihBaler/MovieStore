@@ -1,0 +1,108 @@
+﻿@{
+    ViewData["Title"] = "UpdateMovie";
+}
+@model UpdateMovieDTO
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-8">
+            <form asp-action="UpdateMovie" enctype="multipart/form-data">
+                <input type="hidden" asp-for="Id" />
+                <input type="hidden" asp-for="Image" />
+                <input type="hidden" asp-for="CreatedDate" />
+                <input type="hidden" asp-for="UpdatedDate" />
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Film Güncelle</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="mb-4">
+                            <label class="form-label" asp-for="Name"></label>
+                            <input asp-for="Name" class="form-control" placeholder="Lütfen film adı giriniz...." />
+                            <span asp-validation-for="Name" class="text-danger"></span>
+                        </div>
+                        <div class="mb-4">
+                            <label class="form-label" asp-for="Description"></label>
+                            <input asp-for="Description" class="form-control" placeholder="Lütfen film açıklaması giriniz...." />
+                            <span asp-validation-for="Description" class="text-danger"></span>
+                        </div>
+                        <div class="mb-4">
+                            <label class="form-label" asp-for="Year"></label>
+                            <input asp-for="Year" class="form-control" />
+                            <span asp-validation-for="Year" class="text-danger"></span>
+                        </div>
+                        <div class="mb-4">
+                            <label class="form-label" asp-for="DirectorId"></label>
+                            <select asp-for="DirectorId" asp-items="@ViewBag.Directors" class="form-control">
+                                <option value="0" selected="selected" disabled="disabled">Lütfen Yönetmen Seçiniz</option>
+                            </select>
+                            <span asp-validation-for="DirectorId" class="text-danger"></span>
+                        </div>
+                        <div class="mb-4">
+                            <label class="form-label" asp-for="UploadImage"></label>
+                            <input onchange="loadfile(event)" asp-for="UploadImage" class="form-control" />
+                            <span asp-validation-for="UploadImage" class="text-danger"></span>
+                        </div>
+                        <div>
+                            <img id="output" width="100" src="~/images/movies/@Model.Image" />
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <h5>Filmi şu kategorilerden kaldırın => <span class="badge">@Model.Name</span></h5>
+                                <table class="table table-hover table-sm">
+                                    @if (Model.HasCategories is not null)
+                                    {
+                                        @foreach (var category in Model.HasCategories)
+                                        {
+                                            <tr>
+                                                <td>@category.Name</td>
+                                                <td>
+                                                    <input type="checkbox" value="@category.Id" name="DeleteIds"  />
+                                                </td>
+                                            </tr>
+                                        }
+                                    }
+                                </table>
+                            </div>
+                            <div class="col-sm-6">
+                                <h5>Filmi şu kategorilere ekleyin => <span class="badge">@Model.Name</span></h5>
+                                <table class="table table-hover table-sm">
+                                    @if (Model.HasNotCategories is not null)
+                                    {
+                                        @foreach (var category in Model.HasNotCategories)
+                                        {
+                                            <tr>
+                                                <td>@category.Name</td>
+                                                <td>
+                                                    <input type="checkbox" value="@category.Id" name="AddIds" />
+                                                </td>
+                                            </tr>
+                                        }
+                                    }
+                                </table>
+                            </div>
+                        </div>
+
+
+                    </div>
+                    <div class="card-footer">
+                        <button type="submit" class="btn btn-outline-success float-end">Güncelle</button>
+                        <a asp-area="Admin" asp-controller="Movies" asp-action="Index" class="btn btn-outline-info float-start">Geri Dön</a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+@section Scripts
+    {
+    <script>
+        var loadfile = function (event) {
+            var output = document.getElementById('output');
+            output.src = URL.createObjectURL(event.target.files[0]);
+            output.onload = function () {
+                URL.revokeObjectURL(output.src); //free memory
+            }
+        }
+    </script>
+}

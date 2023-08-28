@@ -1,0 +1,63 @@
+﻿@{
+    ViewData["Title"] = "Index";
+}
+@model IEnumerable<Microsoft.AspNetCore.Identity.IdentityRole>
+
+<div class="container-fluid">
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title">Rol Listesi</h3>
+        </div>
+        <div class="card-body">
+            <table class="table table-bordered mt-3 p-2">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Rol Adı</th>
+                        <th>Kullanıcılar</th>
+                        <th>Kullanıcıları Ata</th>
+                        <th>Sil</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var role in Model)
+                    {
+                        <tr>
+                            <td>@role.Id</td>
+                            <td>@role.Name</td>
+                            <td user-role="@role.Id">@role.Id</td>
+                            <td>
+                                <a asp-area="Admin" asp-action="AssignedUser" asp-route-id="@role.Id" class="btn btn-outline-success">Kullanıcı Ata</a>
+                            </td>
+                            <td>
+                                <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#exampleModal-@role.Id">
+                                    Sil
+                                </button>
+
+                                <div class="modal fade" id="exampleModal-@role.Id" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="exampleModalLabel">Silme Uyarısı</h5>
+                                            </div>
+                                            <div class="modal-body">
+                                                Silmek istediğinize emin misiniz?
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-outline-info" data-bs-dismiss="modal">İptal</button>
+                                                <a asp-area="Admin" asp-controller="Roles" asp-action="RemoveRole" asp-route-id="@role.Id" class="btn btn-outline-danger">Sil</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+        <div class="card-footer">
+            <a class="btn btn-outline-info d-block" asp-area="Admin" asp-controller="Roles" asp-action="CreateRole">Yeni Rol Ekle</a>
+        </div>
+    </div>
+</div>

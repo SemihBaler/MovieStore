@@ -1,0 +1,47 @@
+﻿@if (User?.Identity?.IsAuthenticated ?? false)
+{
+    <div class="d-flex ms-auto">
+        @if (User.IsInRole("Admin"))
+        {
+            <div style="margin-right:5px">
+                <a class="btn btn-success" asp-area="Admin" asp-controller="Dashboard" asp-action="Index">Admin Paneli</a>
+            </div>
+        }
+        <div style="margin-right:5px">
+            <a class="btn btn-primary" asp-area="" asp-controller="Accounts" asp-action="EditUser">Düzenle</a>
+        </div>
+        <div style="margin-right:5px">
+            <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                Çıkış Yap
+            </button>
+
+            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Uyarı</h5>
+                        </div>
+                        <div class="modal-body">
+                            Çıkış yapmak istediğinize emin misiniz?
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-info" data-bs-dismiss="modal">İptal</button>
+                            <a asp-area="" asp-controller="Accounts" asp-action="LogOut" class="btn btn-danger">Evet</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+else
+{
+    <div class="d-flex ms-auto">
+        <div style="margin-right:5px">
+            <a class="btn btn-success" asp-area="" asp-controller="Accounts" asp-action="Register">Kayıt Ol</a>
+        </div>
+        <div style="margin-right:5px">
+            <a class="btn btn-info" asp-area="" asp-controller="Accounts" asp-action="LogIn">Giriş Yap</a>
+        </div>
+    </div>
+}

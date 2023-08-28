@@ -1,0 +1,43 @@
+﻿@{
+    ViewData["Title"] = "UpdateDirector";
+}
+@model UpdateDirectorDTO
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-8">
+            <form asp-action="UpdateDirector">
+                <input type="hidden" asp-for="Id" />
+                <input type="hidden" asp-for="CreatedDate" />
+                <input type="hidden" asp-for="UpdatedDate" />
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Yönetmen Güncelle</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="mb-4">
+                            <label class="form-label" asp-for="FirstName"></label>
+                            <input asp-for="FirstName" class="form-control" placeholder="Lütfen yönetmen adı giriniz...." />
+                            <span asp-validation-for="FirstName" class="text-danger"></span>
+                        </div>
+                        <div class="mb-4">
+                            <label class="form-label" asp-for="LastName"></label>
+                            <input asp-for="LastName" class="form-control" placeholder="Lütfen yönetmen soyadı giriniz...." />
+                            <span asp-validation-for="LastName" class="text-danger"></span>
+                        </div>
+                        <div class="mb-4">
+                            <label class="form-label" asp-for="BirthDate"></label>
+                            <input type="date" asp-for="BirthDate" class="form-control" />
+                            <span asp-validation-for="BirthDate" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <button type="submit" class="btn btn-outline-success float-end">Güncelle</button>
+                        <a asp-area="Admin" asp-controller="Directors" asp-action="Index" class="btn btn-outline-info float-start">Geri Dön</a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+

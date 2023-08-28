@@ -1,0 +1,33 @@
+﻿@{
+    ViewData["Title"] = "UpdateCategory";
+}
+@model UpdateCategoryDTO
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-8">
+            <form asp-action="UpdateCategory">
+                <input type="hidden" asp-for="Id" />
+                <input type="hidden" asp-for="CreatedDate" />
+                <input type="hidden" asp-for="UpdatedDate" />
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Kategori Güncelle</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="mb-4">
+                            <label class="form-label" asp-for="Name"></label>
+                            <input asp-for="Name" class="form-control" placeholder="Lütfen kategori adı giriniz...." />
+                            <span asp-validation-for="Name" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <button type="submit" class="btn btn-outline-success float-end">Güncelle</button>
+                        <a asp-area="Admin" asp-controller="Categories" asp-action="Index" class="btn btn-outline-info float-start">Geri Dön</a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
